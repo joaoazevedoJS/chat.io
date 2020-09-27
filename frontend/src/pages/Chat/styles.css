@@ -1,0 +1,36 @@
+.chatMessage {
+  margin: 32px 32px 16px 32px;
+  color: #919D8E;
+}
+
+.chatMessage + .chatMessage {
+  margin: 16px 32px;
+}
+
+.userMessage {
+  color: #60AD4D;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.userMessage span {
+  display: none;
+}
+
+.chatMessage span {
+  font-size: 12px;
+}
+
+.messageContent {
+  margin-top: 8px;
+  padding: 16px;
+  border: 1px solid #919D8E;
+  width: 40%;
+  font-size: 16px;
+}
+
+.userMessage .messageContent {
+  border: 1px solid #60AD4D;
+}
+
