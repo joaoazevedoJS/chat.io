@@ -1,0 +1,128 @@
+#chatio header {
+  width: 100%;
+  background: #5b605d;
+  color: #d7ddd7;
+  padding: 1.5rem 8rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#chatio header h1 {
+  cursor: pointer;
+  font-size: 1.8rem;
+}
+
+#chatio header nav {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+#chatio header nav p {
+  cursor: pointer;
+}
+
+#chatio .App-chat {
+  min-height: 100vh;
+  padding: 0 8rem;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#chatio .App-chat footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 32px;
+}
+
+#chatio .App-chat footer .messageLength {
+  margin-bottom: 8px;
+}
+
+#chatio .App-chat footer div.group-button {
+  display: flex;
+  height: 3.75rem;
+  width: 100%;
+}
+
+#chatio .App-chat footer div.group-button input {
+  width: 100%;
+  border-bottom-left-radius: 4px;
+  color: #848986;
+}
+
+#chatio .App-chat footer div.group-button input,
+#chatio .App-chat footer div.group-button .btn {
+  font-size: 1rem;
+  height: 100%;
+  padding: 1rem;
+  border: 1px solid #5b605d;
+  outline: none;
+}
+
+#chatio .App-chat footer div.group-button .btn {
+  width: 12rem;
+  background: #5b605d;
+  border-bottom-right-radius: 4px;
+  font-weight: bold;
+  color: #d7ddd7;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.4s;
+}
+
+#chatio .App-chat footer div.group-button .btn:hover {
+  border: 1px solid #848986;
+  background: #848986;
+}
+
+@media (max-width: 1250px) {
+  #chatio .App-chat .App-chat {
+    width: 90%;
+  }
+}
+
+@media (max-width: 950px) {
+  #chatio header {
+    padding: 1.5rem;
+  }
+
+  #chatio header h1 {
+    font-size: 1rem;
+  }
+
+  #chatio header nav {
+    font-size: 1rem;
+  }
+
+  #chatio .App-chat {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  #chatio .App-chat footer {
+    margin-bottom: 0px;
+  }
+
+  #chatio .App-chat footer .messageLength {
+    margin-bottom: 8px;
+  }
+
+  #chatio .App-chat footer div.group-button {
+    flex-direction: column;
+  }
+
+  #chatio .App-chat footer div.group-button .btn,
+  #chatio .App-chat footer div.group-button input {
+    border-radius: 4px;
+  }
+
+  #chatio .App-chat footer div.group-button .btn {
+    width: 100%;
+    margin: 1rem 0;
+  }
+}

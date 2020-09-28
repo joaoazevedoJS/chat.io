@@ -6,23 +6,10 @@
 
 body {
   background: #D7DDD7;
-  width: 100%;
-  min-height: 100vh;
 }
 
 html, body, input, button, textarea {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
   color: #5B605D;
-}
-
-.alert {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  padding: 16px;
-  background: rgb(207, 18, 18);
-  color: #eded;
 }

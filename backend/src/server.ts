@@ -17,6 +17,10 @@ io.on('connection', socket => {
   ++connections
   
   io.emit('siteConnections', connections);
+
+  socket.on('getConnections', () => {
+    io.emit('siteConnections', connections);
+  })
   
   socket.on('disconnect', () => {
     --connections;

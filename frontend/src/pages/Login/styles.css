@@ -1,3 +1,117 @@
 #login {
-  margin: 80px 128px 0 128px;
+  margin: 5rem 8rem 0 8rem;
+}
+
+#login header {
+  margin-bottom: 2rem;
+}
+
+#login .login-chat {
+  width: 32rem;
+}
+
+#login main {
+  min-height: calc(100vh - 10rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#login main img {
+  width: 37rem;
+}
+
+#login main .nickname {
+  display: flex;
+  flex-direction: column;
+}
+
+#login main .nickname label {
+  color: #848986;
+  font-size: 1.2rem;
+}
+
+#login main .nickname input {
+  color: #848986;
+  border: 1px solid #5B605D;
+  margin: 1rem 0;
+  background: transparent;
+  height: 2.5rem;
+  border-radius: 0.4rem;
+  padding: 16px;
+  outline: none;
+}
+
+#login main .group-connectios {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#login main .group-connectios p {
+  color: #5B605D;
+  font-weight: 500;
+}
+
+#login main .group-connectios button {
+  background: #5B605D;
+  border: 1px solid #5B605D;
+  border-radius: 0.4rem;
+  height: 3rem;
+  width: 12.5rem;
+  font-size: 1rem;
+  color: #D7DDD7;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  transition: background 0.4s;
+}
+
+#login main .group-connectios button:hover {
+  border: 1px solid #848986;
+  background: #848986;
+}
+
+@media (max-width: 1250px) {
+  #login .login-chat {
+    width: 24rem;
+  }
+
+  #login main img {
+    width: 24rem;
+  }
+}
+
+@media (max-width: 950px) {
+  #login .login-chat {
+    width: 100%;
+  }
+
+  #login main img {
+    display: none;
+  }
+}
+
+@media (max-width: 750px) {
+  #login main .group-connectios {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #login main .group-connectios p {
+    order: 2;
+    margin-top: 1rem;
+  }
+
+  #login main .group-connectios button  {
+    order: 1;
+    width: 100%;
+  }
+}
+
+@media (max-width: 650px) {
+  #login {
+    margin: 5rem 2rem 0 2rem;
+  }
 }

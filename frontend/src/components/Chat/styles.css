@@ -1,15 +1,6 @@
-.App-chat {
-  min-height: 100vh;
-  width: 70%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 main.chat {
   background: #C8CFC8;
-  margin: 32px 0;
+  margin: 32px 0 16px 0px;
   height: 500px;
   overflow: auto;
   border-top-right-radius: 4px;
@@ -42,7 +33,16 @@ main.chat::-webkit-scrollbar-thumb:hover {
 }
 
 .userMessage {
-  margin: 5px 32px;
+  margin: 32px 32px 6px 32px;
+}
+
+.userMessage + .userMessage  {
+  margin: 6px 32px;
+}
+
+.userMessage:last-child,
+.chatMessage:last-child {
+  margin-bottom: 32px;
 }
 
 .chatMessage span {
@@ -76,45 +76,18 @@ main.chat::-webkit-scrollbar-thumb:hover {
   border: 1px solid #60AD4D;
 }
 
-footer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+@media (max-width: 950px) {
+  .message {
+    width: 70%;
+  }
 }
 
-footer .messageLength {
-  margin-bottom: 8px;
-}
+@media (max-width: 650px) {
+  main.chat {
+    margin: 32px 0px;
+  }
 
-footer div.group {
-  display: flex;
-  height: 60px; 
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-}
-
-footer div.group input {
-  width: 100%;
-  border-bottom-left-radius: 4px;
-  color: #848986;
-}
-
-footer div.group input, 
-footer div.group .btn {
-  font-size: 16px;
-  height: 100%;
-  padding: 16px;
-  border: 1px solid #5B605D;
-  outline: none;
-}
-
-footer div.group .btn {
-  width: 12rem;
-  background: #5B605D;
-  border-bottom-right-radius: 4px;
-  font-weight: bold;
-  color: #D7DDD7;
-  cursor: pointer;
-  user-select: none;
+  .message {
+    width: 85%;
+  }
 }

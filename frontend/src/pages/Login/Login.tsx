@@ -8,43 +8,47 @@ import BackgroundHero from "../../assets/images/background-hero.svg";
 
 import socket from "../../services/socket";
 
-import LocationPage from '../../utils/LocationPage'
+import GenerateColor from "../../utils/GenerateColor";
 
 const Login = function () {
   const history = useHistory();
 
   const [username, setUsername] = useState("");
   const [connections, setConnections] = useState(0);
-  const [connectionsText, setConnectionsText] = useState('');
+  const [connectionsText, setConnectionsText] = useState("");
 
   useEffect(() => {
-    LocationPage.reflashGoBackPage()
-    
+    socket.emit('getConnections')
+
     socket.on("siteConnections", (connections: number) => {
-      console.log(connections)
       setConnections(connections - 1);
     });
-    
+
     socket.on("siteDisconnect", (connections: number) => {
-      console.log(connections)
       setConnections(connections - 1);
     });
   }, []);
 
   useEffect(() => {
-    if(connections === 0) {
-      setConnectionsText('Ninguem está online no momento!')
-    } else if(connections === 1) {
-      setConnectionsText(`${connections} pessoa online`)
+    if (connections === 0) {
+      setConnectionsText("Ninguem está online no momento!");
+    } else if (connections === 1) {
+      setConnectionsText(`${connections} pessoa online`);
     } else {
-      setConnectionsText(`${connections} pessoas onlines!`)
+      setConnectionsText(`${connections} pessoas onlines!`);
     }
   }, [connections]);
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
+    const user_color = localStorage.getItem("color")
 
+    localStorage.setItem("user_id", socket.id);
     localStorage.setItem("user_name", username);
+
+    if(!user_color) {
+      localStorage.setItem("color", GenerateColor());
+    }
 
     history.push("/chatio");
   }
@@ -56,9 +60,9 @@ const Login = function () {
       </header>
 
       <main>
-        <section className="login">
+        <section className="login-chat">
           <form onSubmit={handleSubmit}>
-            <div>
+            <div className="nickname">
               <label htmlFor="username">Digite seu nickname</label>
               <input
                 type="text"
@@ -68,7 +72,7 @@ const Login = function () {
               />
             </div>
 
-            <div>
+            <div className="group-connectios">
               <p>{connectionsText}</p>
 
               <button>Entrar</button>
