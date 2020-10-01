@@ -23,6 +23,7 @@ const Chatio = function () {
   const [userMessage, setUserMessage] = useState("");
   const [messages, setMessages] = useState<UserMessage[]>([]);
   const [messageLength, setMessageLength] = useState(250);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     socket.emit("getMessages");
@@ -30,11 +31,22 @@ const Chatio = function () {
     socket.on("chatMessage", (chatMessage: Array<UserMessage>) =>
       setMessages(chatMessage)
     );
+
+    const element = document.querySelector("main.chat");
+
+    if(element) {
+      element.addEventListener('scroll', (e) => { 
+        element.scrollHeight - element.clientHeight <= element.scrollTop + 1 ?
+          setScrolled(false) : setScrolled(true) 
+       })
+    }
   }, []);
 
   useEffect(() => {
-    updateScroll();
-  }, [messages]);
+    if(!scrolled) {
+      updateScroll();
+    }
+  }, [messages, scrolled]);
 
   async function  handleBack() {
     history.push('/')
