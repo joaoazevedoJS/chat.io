@@ -1,14 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { FormEvent, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import "./styles.css";
-
 import BackgroundHero from "../../assets/images/background-hero.svg";
-
 import socket from "../../services/socket";
 
-import GenerateColor from "../../utils/GenerateColor";
+import "./styles.css";
 
 const Login = function () {
   const history = useHistory();
@@ -18,7 +14,7 @@ const Login = function () {
   const [connectionsText, setConnectionsText] = useState("");
 
   useEffect(() => {
-    socket.emit('getConnections')
+    socket.emit("getConnections");
 
     socket.on("siteConnections", (connections: number) => {
       setConnections(connections - 1);
@@ -41,14 +37,8 @@ const Login = function () {
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    const user_color = localStorage.getItem("color")
 
-    localStorage.setItem("user_id", socket.id);
-    localStorage.setItem("user_name", username);
-
-    if(!user_color) {
-      localStorage.setItem("color", GenerateColor());
-    }
+    socket.emit('userName', username)
 
     history.push("/chatio");
   }

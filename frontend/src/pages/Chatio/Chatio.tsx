@@ -3,9 +3,6 @@ import { useHistory } from "react-router-dom";
 
 import socket from "../../services/socket";
 
-import dateUTC from "../../utils/dateUTC";
-import GenerateColor from "../../utils/GenerateColor";
-
 import Chat from "../../components/Chat/Chat";
 import AlertError from "../../components/AlertError/AlertError";
 
@@ -28,9 +25,7 @@ const Chatio = function () {
   const [messageLength, setMessageLength] = useState(250);
 
   useEffect(() => {
-    socket.emit("getMessages", (chatMessage: Array<UserMessage>) =>
-      setMessages(chatMessage)
-    );
+    socket.emit("getMessages");
 
     socket.on("chatMessage", (chatMessage: Array<UserMessage>) =>
       setMessages(chatMessage)
@@ -45,71 +40,22 @@ const Chatio = function () {
     history.push('/')
   }
 
-  function getDate() {
-    const date = dateUTC();
+  function handleMessage(message: string) {
+    if (message.length > 250) return;
 
-    const hours =
-      date.getUTCHours() < 10 ? `0${date.getUTCHours()}` : date.getUTCHours();
-    const minutes =
-      date.getUTCMinutes() < 10
-        ? `0${date.getUTCMinutes()}`
-        : date.getUTCMinutes();
-
-    const formated = `${hours}:${minutes}`;
-
-    return formated;
+    setMessageLength(250 - message.length);
+    setUserMessage(message);
   }
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    const user_name = localStorage.getItem("user_name") || "Anonimo";
-
-    let user_color = localStorage.getItem("color")
-
-    if(!user_color) {
-      const color = GenerateColor()
-
-      localStorage.setItem("color", color);
-
-      user_color = color
-    }
+    if (!userMessage) return setError("Digite uma mensagem!");
     
-    let user_id = localStorage.getItem("user_id")
-
-    if(!user_id) {
-      user_id = socket.id;
-
-      localStorage.setItem("user_id", socket.id);
-    }
-
-    if (!userMessage) {
-      return setError("Digite uma mensagem!");
-    }
-
-    const user_message = {
-      user_name: user_name.trim(),
-      user_id,
-      message: userMessage,
-      message_date: getDate(),
-      user_color,
-    };
-
+    socket.emit("sendMessage", userMessage);
+    
     setMessageLength(250);
     setUserMessage("");
-
-    setMessages([...messages, user_message]);
-
-    socket.emit("sendMessage", user_message);
-  }
-
-  function handleMessage(message: string) {
-    if (message.length > 250) {
-      return;
-    }
-
-    setMessageLength(250 - message.length);
-    setUserMessage(message);
   }
 
   function updateScroll() {
@@ -124,16 +70,12 @@ const Chatio = function () {
     <div id="chatio">
       <header>
         <h1 onClick={handleBack}>Chat.io</h1>
-
-        <nav>
-          <p onClick={handleBack}>nickname</p>
-        </nav>
       </header>
 
       <div className="App-chat">
         <AlertError error={error} setError={setError} />
 
-        <Chat messages={messages} />
+        <Chat messages={messages} user_id={socket.id} />
 
         <form onSubmit={handleSubmit}>
           <footer>

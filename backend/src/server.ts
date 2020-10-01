@@ -3,44 +3,50 @@ import cors from 'cors'
 import socketio from 'socket.io'
 import http from 'http'
 
-import routes from './routes'
+import GenerateColor from './utils/colorGenarator'
+import CreateMessage from './utils/CreateMessage'
 
 const app = express()
 const server =  new http.Server(app);
 const io = socketio(server)
 
+app.use(cors())
+app.use(express.json())
+
 let connections = 0 
 const chatMessage = []
 
-// vai ouvir todas as connections do usuário
 io.on('connection', socket => {
   ++connections
+
+  const user_color = GenerateColor()
+  let user_name = "Anonimo"
   
-  io.emit('siteConnections', connections);
+  socket.broadcast.emit('siteConnections', connections);
 
   socket.on('getConnections', () => {
-    io.emit('siteConnections', connections);
+    socket.emit('siteConnections', connections);
   })
+
+  socket.on("userName", (userName: string) => { user_name = userName })
   
   socket.on('disconnect', () => {
     --connections;
 
-    io.emit('siteDisconnect', connections)
+    socket.broadcast.emit('siteDisconnect', connections)
   })
 
   socket.on('getMessages', () => {
     socket.emit('chatMessage', chatMessage)
   })
 
-  socket.on('sendMessage', userMessage => {
-    chatMessage.push(userMessage)
+  socket.on('sendMessage', message => {
+    const user_message = CreateMessage(message, socket.id, user_name, user_color)
+    
+    chatMessage.push(user_message)
 
-    socket.broadcast.emit('chatMessage', chatMessage)
+    io.emit('chatMessage', chatMessage)
   })
 })
-
-app.use(cors())
-app.use(express.json())
-app.use(routes)
 
 server.listen(process.env.PORT || 3333)

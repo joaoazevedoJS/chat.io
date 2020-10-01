@@ -12,12 +12,11 @@ interface UserMessage {
 
 interface ChatMessages {
   messages: Array<UserMessage>;
+  user_id: string
 }
 
-const Chat: FC<ChatMessages> = function ({ messages }) {
+const Chat: FC<ChatMessages> = function ({ messages, user_id }) {
   function userValidation(message: UserMessage) {
-    const user_id = localStorage.getItem("user_id");
-
     return user_id === message.user_id ? "userMessage" : "chatMessage";
   }
 
